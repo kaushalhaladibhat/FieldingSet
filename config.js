@@ -1,8 +1,11 @@
-window.TM_CONFIG = {
+const key = ["AIzaSyDo", "R6--LP1Cgv", "NIupp2", "w7BXihJi", "QAjfLDc"];
+const geminiKey = key.join("");
 
-  const key = ["AIzaSyDo", "R6--LP1Cgv", "NIupp2", "w7BXihJi","QAjfLDc"];
-  const geminiKey = key.join("");
+window.TM_CONFIG = {
+  geminiKey: geminiKey,
+
   vapidKey: "BMT-EaZtNroZ5fF_Eitxq5Le4ZewSCxkxhNGJwwOhmo4fTrRbIv0V2rltEZvv-leeIwinM6PmiV069srU7avy8o",
+
   firebaseConfig: {
     apiKey: "AIzaSyBg4lX_8ZMKSjdbzdV5dI1_dZOipJ56MK0",
     authDomain: "teachmate12.firebaseapp.com",
