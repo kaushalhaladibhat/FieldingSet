@@ -1,34 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-messaging.js";
-
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
-
-// Ask permission
-Notification.requestPermission().then(permission => {
-  if (permission === "granted") {
-    console.log("✅ Permission granted");
-
-    getToken(messaging, {
-      vapidKey: "BMT-EaZtNroZ5fF_Eitxq5Le4ZewSCxkxhNGJwwOhmo4fTrRbIv0V2rltEZvv-leeIwinM6PmiV069srU7avy8o"
-    }).then((currentToken) => {
-      if (currentToken) {
-        console.log("🔥 FCM TOKEN:", currentToken);
-      } else {
-        console.log("❌ No token");
-      }
-    });
-  }
-});
-
-// Foreground messages
-onMessage(messaging, (payload) => {
-  console.log("📩 Foreground message:", payload);
-
-  new Notification(payload.data.title, {
-    body: payload.data.body
-  });
-});
 window.TM_CONFIG = {
   geminiKey: "AIzaSyA2xadXtxqW1qe6zTIa4xJNiJChjqi0nMQ",
   vapidKey: "BMT-EaZtNroZ5fF_Eitxq5Le4ZewSCxkxhNGJwwOhmo4fTrRbIv0V2rltEZvv-leeIwinM6PmiV069srU7avy8o",
