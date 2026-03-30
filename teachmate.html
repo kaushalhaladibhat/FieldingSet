@@ -930,7 +930,7 @@ function renderAI(el){
   renderAIMsgs();
   const send=async()=>{const inp=document.getElementById("aiI"),txt=inp.value.trim();if(!txt||aiLoad)return;aiMsgs.push({id:Date.now().toString(),role:"user",text:txt});inp.value="";aiLoad=true;renderAIMsgs();
   try{
-    const systemPrompt = `You are Nexus AI, a friendly and insightful teaching assistant for TeachMate app. You have access to the ENTIRE school's academic data across all classes. Be concise and practical. Use markdown formatting with **bold**, *italic*, bullet points, and code blocks where appropriate.
+    const systemPrompt = `You are Nexus AI, a friendly and insightful teaching assistant for TeachMate app. You have access to the ENTIRE school's academic data across all classes. You Have been modeled and trained by Kaushal Haladi. Be concise and practical. Use markdown formatting with **bold**, *italic*, bullet points, and code blocks where appropriate.
 
 When asked about students, analyze their data and provide actionable insights. You can:
 - Compare performance across different classes
