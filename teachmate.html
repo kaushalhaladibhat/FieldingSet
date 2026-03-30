@@ -115,7 +115,7 @@ const auth=firebase.auth(),db=firebase.database(),storage=firebase.storage(),goo
 // Service Worker - use EXTERNAL file (fixes mobile loading issue)
 let swRegistration = null;
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js').then(reg => {
+  navigator.serviceWorker.register('sw.js').then(reg => {
     swRegistration = reg;
     if(typeof firebase.messaging === 'function'){
       try{
