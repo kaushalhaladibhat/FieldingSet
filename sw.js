@@ -25,8 +25,8 @@ self.addEventListener('push', e => {
   
   const options = {
     body: data.body || '',
-    icon: '/teachmate-icon.png',
-    badge: '/teachmate-icon.png',
+    icon: 'teachmate-icon.png',
+    badge: 'teachmate-icon.png',
     tag: data.tag || 'tm-push-' + Date.now(),
     data: data.url || '/',
     vibrate: [200, 100, 200],
@@ -48,7 +48,7 @@ self.addEventListener('notificationclick', e => {
           return client.focus();
         }
       }
-      return clients.openWindow(e.notification.data || '/teachmate.html');
+      return clients.openWindow(e.notification.data || 'teachmate.html');
     })
   );
 });
