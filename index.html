@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeachMate</title>
+<meta name="description" content="AI-powered classroom assistant for teachers">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00c8d4">
+<link rel="apple-touch-icon" href="teachmate-icon.png">
+
+<style>
+body {
+    margin:0; padding:0;
+    background: linear-gradient(135deg,#0a0c12,#111827,#0d0f14);
+    color:#00e0ff;
+    font-family:'Rajdhani','Segoe UI', Arial, sans-serif;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* Title */
+#boot-text {
+    font-size:2.6rem;
+    margin-bottom:25px;
+    letter-spacing:2px;
+    text-align:center;
+    background: linear-gradient(135deg,#00e0ff,#8b5cf6,#d946ef);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* Progress */
+#progress-container {
+    width:75%;
+    height:18px;
+    border:1.5px solid rgba(0,224,255,0.4);
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:12px;
+    backdrop-filter: blur(10px);
+}
+
+#progress-bar {
+    width:0%;
+    height:100%;
+    background: linear-gradient(90deg,#00e0ff,#8b5cf6,#d946ef);
+    transition: width 0.1s linear;
+}
+
+/* Console */
+#console {
+    width:85%;
+    font-family: monospace;
+    font-size:0.9rem;
+    line-height:1.3rem;
+    max-height:170px;
+    overflow:hidden;
+    text-align:left;
+    opacity:0.95;
+}
+
+/* Colors */
+.ok { color:#00e0ff; }
+.err { color:#ff4d4d; }
+.fix { color:#facc15; }
+
+/* Footer */
+#footer {
+    position:absolute;
+    bottom:15px;
+    font-size:0.8rem;
+    opacity:0.6;
+}
+
+/* Cursor */
+.cursor {
+    display:inline-block;
+    width:10px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%,50%,100%{opacity:1}
+    25%,75%{opacity:0}
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="boot-text"></div>
+
+<div id="progress-container">
+    <div id="progress-bar"></div>
+</div>
+
+<div id="console"></div>
+
+<div id="footer">
+ © Kaushal Sharma • Kaushal Haladi
+</div>
+
+<script>
+window.onload = function() {
+
+    const bootTextEl = document.getElementById('boot-text');
+    const progressBar = document.getElementById('progress-bar');
+    const consoleEl = document.getElementById('console');
+
+    const bootText = "Initializing TeachMate...";
+    let charIndex = 0;
+
+    const totalTime = 1000 + Math.random() * 2000;
+    const startTime = Date.now();
+
+    // Boot text typing
+    function typeBootText() {
+        if(charIndex < bootText.length){
+            bootTextEl.innerHTML += bootText.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeBootText, 60);
+        } else {
+            bootTextEl.innerHTML += '<span class="cursor">|</span>';
+        }
+    }
+
+    // Line typing (returns Promise → KEY FIX)
+    function typeLine(text, className="ok"){
+        return new Promise(resolve => {
+            let i = 0;
+            const line = document.createElement("div");
+            line.className = className;
+            consoleEl.appendChild(line);
+
+            function typing(){
+                if(i < text.length){
+                    line.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, 10 + Math.random()*20);
+                } else {
+                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                    resolve(); // move to next line ONLY after done
+                }
+            }
+
+            typing();
+        });
+    }
+
+    typeBootText();
+
+    // SEQUENTIAL execution
+
+async function runSequence(){
+
+    await typeLine("➜ Loading class DataBase...");
+    await typeLine("➜ Syncing student records...");
+await new Promise(r => setTimeout(r, 700));
+
+    // RANDOM: 50% chance of Firebase issue
+    if(Math.random() < 0.3){
+
+        await typeLine("✖ DataBase connection failed!", "err");
+        await typeLine("➜ Attempting auto-repair...", "fix");
+        await typeLine("➜ Re-establishing secure channel...", "fix");
+        await typeLine("✔ Connection restored", "ok");
+
+    } else {
+        await typeLine("✔ DataBase connected", "ok");
+    }
+
+    await typeLine("➜ Applying UI...");
+    await typeLine("➜ Securing session...");
+    await typeLine("➜ Preparing dashboard...");
+await new Promise(r => setTimeout(r, 600));
+    await typeLine("✔ TeachMate Ready", "ok");
+await new Promise(r => setTimeout(r, 500));
+}
+
+
+
+    runSequence();
+
+    // Progress bar independent (smooth)
+    const interval = setInterval(()=>{
+        let elapsed = Date.now() - startTime;
+        let progress = (elapsed / totalTime) * 100;
+
+        if(progress > 100) progress = 100;
+        progressBar.style.width = progress + '%';
+
+        if(progress >= 100){
+            clearInterval(interval);
+
+            setTimeout(()=>{
+                // TODO: redirect to main app
+                window.location.href = "teachmate.html";
+            }, 500);
+        }
+
+    }, 40);
+
+};
+</script>
+
+
+</body>
+</html>
