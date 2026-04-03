@@ -716,21 +716,21 @@ document.getElementById("qpDlPdf")?.addEventListener("click",()=>{
   const fileName = `Question_Paper_${qpConfig.subject||"Paper"}.pdf`;
 
 // Create blob
-const blob = doc.output("blob");
-const blobUrl = URL.createObjectURL(blob);
+const fileName = `Question_Paper_${qpConfig.subject||"Paper"}.pdf`;
 
-// 📄 Open PDF
-window.open(blobUrl, "_blank");
+// Convert to data URL (IMPORTANT)
+const dataUrl = doc.output("dataurlstring");
 
-// ⬇️ Download PDF
-setTimeout(() => {
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}, 500);
+// Trigger Android download (this enables "Open with")
+const a = document.createElement("a");
+a.href = dataUrl;
+a.download = fileName;
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+
+// Message
+showQpMsg("✅ Downloaded! Open from notification to choose app");
 })}
 
 // ===== RANDOM PICKER =====
